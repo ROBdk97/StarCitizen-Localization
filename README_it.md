@@ -1,6 +1,8 @@
 # StarCitizen-Localization 🌎
 
-🚧 Questo è un progetto Work In Progress per tradurre Star Citizen in altre lingue.
+![GitHub all releases](https://img.shields.io/github/downloads/Dymerz/StarCitizen-Localization/total)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Dymerz/StarCitizen-Localization/.github%2Fworkflows%2Fvalidate-global-ini.yaml?event=push&label=INI%20Validation&link=https%3A%2F%2Fgithub.com%2FDymerz%2FStarCitizen-Localization%2Factions%2Fworkflows%2Fvalidate-global-ini.yaml)
+
 
 - 🇫🇷 [Instruction en Français](README_fr.md).
 - 🇩🇪 [Anleitung auf Deutsch](README_de.md).
@@ -19,20 +21,15 @@
 ---
 ## Lingue Supportate
 
-| Lingue | Supportate |
-|---|---|
-| Cinese Semplificato | ❌ |
-| Cinese Tradizionale | ❌ |
-| Inglese | ✅ |
-| Francese - Francia | ✅ |
-| Tedesco - Germania | ✅ |
-| Italiano - Italia | ❌ |
-| Giapponese - Giappone | ❌ |
-| Coreano - Corea del Sud | ❌ |
-| Polacco - Polonia | ❌ |
-| Portoghese (Brasile) - Brasile | ✅ |
+| Lingue | Supportate | Fonte |
+|---|---|---|
+| Inglese | ✅ 3.21.0 | Importato dai file di gioco |
+| Francese - Francia | ✅ 3.21.0 | Generato da [circuspes.fr](https://traduction.circuspes.fr) e [SPEED0U/StarCitizenFrenchTranslation](https://github.com/SPEED0U/StarCitizenFrenchTranslation)
+| Tedesco - Germania | ✅ 3.21.0 | Qui |
+| Italiano - Italia | ✅ 3.21.0 | [GattoMatto](https://robertsspaceindustries.com/citizens/GattoMatto) e [MrRevo](https://robertsspaceindustries.com/citizens/MrRevo) |
+| Portoghese (Brasile) - Brasile | ✅ 3.21.0 | Qui |
 | Spagnolo - America Latina | ❌ |
-| Spagnolo - Spagna | ✅ |
+| Spagnolo - Spagna | ✅ 3.21.0 | Qui |
 
 ---
 ## Installazione
@@ -52,15 +49,10 @@
 
     | Lingue |   |
     |---|---|
-    | Cinese Semplificato | `g_language = chinese_(simplified)` |
-    | Cinese Tradizionale | `g_language = chinese_(traditional)` |
     | Inglese | `g_language = english` |
     | Francese - Francia | `g_language = french_(france)` |
     | Tedesco - Germania | `g_language = german_(germany)` |
     | Italiano - Italia | `g_language = italian_(italy)` |
-    | Giapponese - Giappone | `g_language = japanese_(japan)` |
-    | Coreano - Corea del Sud | `g_language = korean_(south_korea)` |
-    | Polacco - Polonia | `g_language = polish_(poland)` |
     | Portoghese (Brasile) - Brasile | `g_language = portuguese_(brazil)` |
     | Spagnolo - America Latina | `g_language = spanish_(latin_america)` |
     | Spagnolo - Spagna | `g_language = spanish_(spain) ` |

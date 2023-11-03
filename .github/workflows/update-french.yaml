@@ -9,7 +9,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  fetch-file:
+  update-french:
+    name: Update French localization file
     if: github.repository == 'Dymerz/StarCitizen-Localization'
     runs-on: ubuntu-latest
 
@@ -22,24 +23,36 @@ jobs:
       with:
         node-version: 18
 
+    - name: Install dependencies
+      uses: chill-viking/npm-ci@v1.2.0
+      with:
+        working_directory: tools/ini-utils
+
+    - name: Build ini-utils
+      working-directory: tools/ini-utils
+      run: npm run build
+
     - name: Download global.ini from 'SPEED0U/StarCitizenTranslations' - AI translated
       run: |
         curl -o global.ini -L "https://raw.githubusercontent.com/SPEED0U/StarCitizenTranslations/main/french_(france)/global.ini"
-        mv global.ini ai.ini
+        mv global.ini speedou.ini
 
     - name: Download global.ini from 'traduction.circuspes.fr' - Human translated
       run: |
         curl -o global.ini -L "https://traduction.circuspes.fr/download/global.ini"
-        mv global.ini human.ini
+        mv global.ini circus.ini
 
-    - name: Install dependencies
-      working-directory: ./tools/ini-merger
-      run: npm ci
+    - name: Validate "SPEED0U" file
+      run: node ./tools/ini-utils/dist/src/index.js validate "$GITHUB_WORKSPACE/data/Localization/english/global.ini" "$GITHUB_WORKSPACE/speedou.ini"
 
-    - name: Execute INI merge script
-      run: npm run --prefix tools/ini-merger start "$GITHUB_WORKSPACE/data/Localization/english/global.ini" "$GITHUB_WORKSPACE/human.ini" "$GITHUB_WORKSPACE/ai.ini" "$GITHUB_WORKSPACE/data/Localization/french_(france)/global.ini"
+    - name: Validate "traduction.circuspes.fr" file
+      run: node ./tools/ini-utils/dist/src/index.js validate "$GITHUB_WORKSPACE/data/Localization/english/global.ini" "$GITHUB_WORKSPACE/circus.ini"
+
+    - name: Merge INI files
+      run: node ./tools/ini-utils/dist/src/index.js merge "$GITHUB_WORKSPACE/data/Localization/english/global.ini" "$GITHUB_WORKSPACE/circus.ini" "$GITHUB_WORKSPACE/speedou.ini" "$GITHUB_WORKSPACE/data/Localization/french_(france)/global.ini"
 
     - name: Create Pull Request
+      if: github.ref == 'refs/heads/main'
       uses: peter-evans/create-pull-request@v5
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}

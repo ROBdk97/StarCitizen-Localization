@@ -12,14 +12,15 @@
 - 🇧🇷 [Instrução em Português](README_ptbr.md).
 
 **Inhaltsverzeichnis:**
-1. [Unterstützte Sprachen](#unterstützte-sprachen)
-2. [Installationsanleitung](#installationsanleitung)
-3. [Aktualisieren der Lokalisierungsdateien](#aktualisieren-der-lokalisierungsdateien)
-4. [Beitragen](#beitragen)
-5. [Haftungsausschluss](#haftungsausschluss)
+  - [Unterstützte Sprachen](#unterstützte-sprachen)
+  - [Installationsanleitung](#installationsanleitung)
+  - [Aktualisieren der Lokalisierungsdateien](#aktualisieren-der-lokalisierungsdateien)
+  - [Beitragen](#beitragen)
+  - [Haftungsausschluss](#haftungsausschluss)
 
 ---
 ## Unterstützte Sprachen
+
 | Sprache | Unterstützt | Quelle |
 |---|---|---|
 | Englisch | ✅ 3.21.1 | Importiert aus den Spieldateien |

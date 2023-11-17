@@ -1,9 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "localization_url=https://github.com/Dymerz/StarCitizen-Localization/releases/latest/download/Localization.zip"
-
-rem List of languages
+:: Define the languages
 set "lang_list[1]=chinese_(simplified)"
 set "lang_list[2]=chinese_(traditional)"
 set "lang_list[3]=english"
@@ -16,42 +14,20 @@ set "lang_list[9]=polish_(poland)"
 set "lang_list[10]=portuguese_(brazil)"
 set "lang_list[11]=spanish_(latin_america)"
 set "lang_list[12]=spanish_(spain)"
+set "lang_list[13]=REMOVE
 
-rem Get the current directory
-set "current_directory=%CD%"
+:: Check the directory
 set BATCH_PATH=%~dp0
 set BATCH_PATH=%BATCH_PATH:~0,-1%
-
-rem Check if the script is executed from the "\StarCitizen\[Live or PTU]\Data" folder
-echo %BATCH_PATH% | findstr /I /C:"\StarCitizen\LIVE\data" >nul
+echo %BATCH_PATH% | findstr /I /C:"\StarCitizen\LIVE\data" >nul || echo %BATCH_PATH% | findstr /I /C:"\StarCitizen\PTU\data" >nul
 if errorlevel 1 (
-    echo %BATCH_PATH% | findstr /I /C:"\StarCitizen\PTU\data" >nul
-    if errorlevel 1 (
-        echo:
-        echo This script must be executed from the "\StarCitizen\[LIVE or PTU]\data" folder.
-        pause
-        exit /b
-    )
+    echo This script must be executed from the "\StarCitizen\[LIVE or PTU]\data" folder.
+    pause
+    exit /b
 )
 
-echo Downloading the latest version of the localization files...
-curl -L -s -o Localization.zip %localization_url%
-
-echo Extracting the localization files...
-powershell -noprofile -executionpolicy bypass -command "Expand-Archive -Path Localization.zip -DestinationPath . -Force"
-
-del Localization.zip
-
-rem Check if the "Localization" folder exists
-if not exist "Localization" (
-  echo:
-  echo The "Localization" folder does not exist.
-  pause
-  exit /b
-)
-
-rem Ask the user to select the language to install
-echo Select the language you want to install:
+:: Display language options
+echo Select the language you want to install or choose 13 to remove g_language:
 echo 1. Chinese - Simplified
 echo 2. Chinese - Traditional
 echo 3. English
@@ -59,54 +35,93 @@ echo 4. French - France
 echo 5. German - Germany
 echo 6. Italian - Italy
 echo 7. Japanese - Japan
-echo 8. Korean - South
+echo 8. Korean - South Korea
 echo 9. Polish - Poland
 echo 10. Portuguese - Brazil
-echo 11. Spanish - Latin
+echo 11. Spanish - Latin America
 echo 12. Spanish - Spain
+echo 13. Remove "g_language"
 
-set /p lang_choice="Enter the number of the language you want to install, e.g. 3 for English: "
+echo Enter the number of the language you want to select.
+set /p lang_choice="Language number: "
 
-if "!lang_list[%lang_choice%]!" == "" (
-  echo:
-  echo "The number you entered is not valid."
-  pause
-  exit /b
+:: Check for valid choice
+if not defined lang_list[%lang_choice%] (
+    echo Invalid choice.
+    pause
+    exit /b
 )
+set "language=!lang_list[%lang_choice%]!"
 
-rem Check if the selected language folder exists
-if not exist "Localization\!lang_list[%lang_choice%]!" (
-  echo:
-  echo The language folder Localization\!lang_list[%lang_choice%]! does not exist.
-  echo:
-  echo Maybe the language is not available yet, you can check the status of the translations here:
-  echo https://github.com/Dymerz/StarCitizen-Localization#supported-languages
-  pause
-  exit /b
+:: Option to remove g_language
+if "!language!"=="REMOVE" goto RemoveLanguage
+
+:: Download language file
+IF NOT EXIST ".\Localization\!language!" mkdir .\Localization\!language!
+set "reference=main"
+curl -L -s -o "global.ini" "https://raw.githubusercontent.com/Dymerz/StarCitizen-Localization/!reference!/data/Localization/!language!/global.ini"
+if not exist "global.ini" (
+    echo The language "!language!" does not exist. Check the status of translations at: 
+    echo https://github.com/Dymerz/StarCitizen-Localization#supported-languages
+    pause
+    exit /b
 )
+move /y global.ini ".\Localization\!language!\global.ini" > nul
 
-set "language_line=g_language = !lang_list[%lang_choice%]!"
+@REM :: Update user.cfg
+if exist user.cfg.new del /F user.cfg.new
 
-rem Delete the user.cfg.new file if it exists
-IF EXIST user.cfg.new DEL /F user.cfg.new
+set "language_line=g_language = !language!"
+set "language_line_audio=g_languageAudio = english"
 
-rem Check if the ..\user.cfg file exists, if not, create it
 if not exist "../user.cfg" (
-  echo !language_line! > ../user.cfg
+    echo !language_line! > ../user.cfg
+    echo !language_line_audio! > ../user.cfg
 ) else (
-  rem Replace the language or add it if it does not exist
-  for /f "delims=" %%a in (../user.cfg) do (
-    set "line=%%a"
-    if /i "!line:~0,10!" == "g_language" (
-      echo !language_line!>> user.cfg.new
-    ) else (
-      echo !line!>> user.cfg.new
+    set "foundLanguage=0"
+    set "foundLanguageAudio=0"
+
+    for /f "delims=" %%a in (../user.cfg) do (
+        set "line=%%a"
+        if /i "!line:~0,10!" == "g_language" (
+            if "!foundLanguage!" == "0" (
+              echo !language_line!>> user.cfg.new
+              set "foundLanguage=1"
+            )
+        ) else (
+            if /i "!line:~0,15!" == "g_languageAudio" (
+                if "!foundLanguageAudio!" == "0" (
+                  echo !language_line_audio!>> user.cfg.new
+                  set "foundLanguageAudio=1"
+                )
+            ) else (
+                echo !line!>> user.cfg.new
+            )
+        )
     )
-  )
-  move /y user.cfg.new ..\user.cfg > nul
+    if "!foundLanguage!"=="0" (
+        echo !language_line!>> user.cfg.new
+    )
+    if "!foundLanguageAudio!"=="0" (
+        echo !language_line_audio!>> user.cfg.new
+    )
+    move /y user.cfg.new ..\user.cfg > nul
 )
 
-echo:
-echo You can now enjoy Star Citizen in !lang_list[%lang_choice%]!
+echo Script completed successfully.
+if "!language!" neq "english" echo You can now enjoy Star Citizen in !language!.
 pause
+goto :eof
+
+:RemoveLanguage
+for /f "delims=" %%a in (../user.cfg) do (
+    set "line=%%a"
+    if /i not "!line:~0,10!" == "g_language" (
+        echo !line!>> user.cfg.new
+    )
+)
+move /y user.cfg.new ..\user.cfg > nul
+echo g_language entry has been removed.
+pause
+
 endlocal

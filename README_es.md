@@ -24,10 +24,10 @@
 | Idioma                  | Soportado  | Fuente |
 | ----------------------- | ---------- | ------ |
 | Inglés                  | ✅ 3.21.1  | Importado de los archivos del juego |
-| Francés - Francia       | ✅ 3.21.0  | Generado a partir de [circuspes.fr](https://traduction.circuspes.fr) y [SPEED0U/StarCitizenFrenchTranslation](https://github.com/SPEED0U/StarCitizenFrenchTranslation) |
+| Francés - Francia       | ✅ 3.21.1  | Generado a partir de [circuspes.fr](https://traduction.circuspes.fr) y [SPEED0U/StarCitizenFrenchTranslation](https://github.com/SPEED0U/StarCitizenFrenchTranslation) |
 | Alemán - Alemania       | ✅ 3.21.1  | Aquí |
 | Italiano - Italia       | ✅ 3.21.0  | [GattoMatto](https://robertsspaceindustries.com/citizens/GattoMatto) y [MrRevo](https://robertsspaceindustries.com/citizens/MrRevo) |
-| Portugués - Brasil      | ✅ 3.21.0  | Aquí |
+| Portugués - Brasil      | ✅ 3.21.1  | Aquí |
 | Español - Latinoamérica | ❌         |
 | Español - España        | ✅ 3.21.1  | Aquí |
 
@@ -81,6 +81,7 @@ Para actualizar los archivos de localización, por favor sigue nuevamente la [Gu
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Jack-mk"><img src="https://avatars.githubusercontent.com/u/22667101?v=4?s=100" width="100px;" alt="Jack"/><br /><sub><b>Jack</b></sub></a><br /><a href="#translation-Jack-mk" title="Translation">🌍</a> <a href="#projectManagement-Jack-mk" title="Project Management">📆</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Auhrus"><img src="https://avatars.githubusercontent.com/u/57270834?v=4?s=100" width="100px;" alt="Auhrus"/><br /><sub><b>Auhrus</b></sub></a><br /><a href="#translation-Auhrus" title="Translation">🌍</a> <a href="#projectManagement-Auhrus" title="Project Management">📆</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Nxzzin"><img src="https://avatars.githubusercontent.com/u/148262077?v=4?s=100" width="100px;" alt="Nxzzin"/><br /><sub><b>Nxzzin</b></sub></a><br /><a href="#translation-Nxzzin" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/InterPlay02"><img src="https://avatars.githubusercontent.com/u/23037423?v=4?s=100" width="100px;" alt="InterPlay"/><br /><sub><b>InterPlay</b></sub></a><br /><a href="#translation-InterPlay02" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>

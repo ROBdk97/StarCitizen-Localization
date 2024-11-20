@@ -28,41 +28,52 @@
 
 | Sprache | Unterstützt | Quelle |
 |---|---|---|
-| Englisch | ![Static Badge](https://img.shields.io/badge/3.24.1-PTU-brightgreen) | Importiert aus Spieldateien |
-| Französisch - Frankreich | ![Static Badge](https://img.shields.io/badge/3.24-LIVE-brightgreen) | Generiert von [circuspes.fr](https://traduction.circuspes.fr) und [SPEED0U/StarCitizenFrenchTranslation](https://github.com/SPEED0U/StarCitizenFrenchTranslation) |
-| Deutsch - Deutschland | ![Static Badge](https://img.shields.io/badge/3.24.1-PTU-brightgreen) | Hier |
-| Italienisch - Italien | ![Static Badge](https://img.shields.io/badge/3.23.0-LIVE-yellow) | [GattoMatto](https://robertsspaceindustries.com/citizens/GattoMatto) und [MrRevo](https://robertsspaceindustries.com/citizens/MrRevo) |
-| Portugiesisch - Brasilien | ![Static Badge](https://img.shields.io/badge/3.24.1-PTU-brightgreen)| Hier |
+| Englisch | ![Static Badge](https://img.shields.io/badge/3.24.2-LIVE-brightgreen) | Importiert aus Spieldateien |
+| Französisch - Frankreich | ![Static Badge](https://img.shields.io/badge/3.24.2-LIVE-brightgreen) | Generiert von [circuspes.fr](https://traduction.circuspes.fr) und [SPEED0U/StarCitizenFrenchTranslation](https://github.com/SPEED0U/StarCitizenFrenchTranslation) |
+| Deutsch - Deutschland | ![Static Badge](https://img.shields.io/badge/3.24.2-LIVE-brightgreen) | Hier |
+| Italienisch - Italien | ![Static Badge](https://img.shields.io/badge/3.24.1-LIVE-yellow) | [GattoMatto](https://robertsspaceindustries.com/citizens/GattoMatto) und [MrRevo](https://robertsspaceindustries.com/citizens/MrRevo) |
+| Portugiesisch - Brasilien | ![Static Badge](https://img.shields.io/badge/3.24.2-LIVE-brightgreen)| Hier |
 | Spanisch - Lateinamerika | ![Static Badge](https://img.shields.io/badge/x.xx.x-LIVE-darkred) |
-| Spanisch - Spanien | ![Static Badge](https://img.shields.io/badge/3.23.1a-LIVE-brightgreen) | Hier |
+| Spanisch - Spanien | ![Static Badge](https://img.shields.io/badge/3.23.1a-LIVE-orange) | Hier |
 
 ---
 ## Installationsanleitung
 
 ### Automatische Installation
-1. Laden Sie das [install_localization.ps1](https://github.com/Dymerz/StarCitizen-Localization/releases/latest/download/install_localization.ps1) Skript herunter.
-2. Klicken Sie mit der rechten Maustaste auf die heruntergeladene Datei (**install_localization.ps1**) und wählen Sie `Mit PowerShell ausführen`.
-   > ℹ️ Dieses Skript lädt automatisch die neueste Version der Lokalisierungsdateien herunter, installiert sie im `Localization`-Ordner und konfiguriert die `user.cfg`-Datei.
-3. Starten Sie das Spiel und genießen Sie die Übersetzung!
-> **Hinweis:** Alternativ können Sie das [install_localization.cmd](https://github.com/Dymerz/StarCitizen-Localization/releases/latest/download/install_localization.cmd) Skript verwenden. Legen Sie die heruntergeladene Datei im Ordner `\StarCitizen\LIVE\data\` ab (z.B. `C:\Program Files\Roberts Space Industries\StarCitizen\LIVE\data`).
+
+1. Laden Sie das Script [install_localization.ps1](https://github.com/Dymerz/StarCitizen-Localization/releases/latest/download/install_localization.ps1) herunter.
+2. **Rechtsklicken** Sie auf die Datei und wählen `Mit PowerShell ausführen`.
+3. Folgen Sie den Anweisungen.
+4. Starten Sie das Spiel und genießen Sie die Übersetzung!
+
+> **Hinweis:** Bei einer Fehlermeldung:
+> - Öffnen Sie PowerShell im Ordner mit **install_localization.ps1** und führen Sie:
+>   ```powershell
+>   PowerShell -ExecutionPolicy Bypass -File "./install_localization.ps1"
+>   ```
+>   Dies ist erforderlich, da Windows das Ausführen von Skripten aufgrund von Sicherheitseinstellungen verhindern kann.
+
+> **Alternative:** Verwenden Sie [install_localization.cmd](https://github.com/Dymerz/StarCitizen-Localization/releases/latest/download/install_localization.cmd):
+> - Stellen Sie sicher, dass ein `data`-Ordner in Ihrem Spielverzeichnis existiert (z. B. `C:\Program Files\Roberts Space Industries\StarCitizen\LIVE\data\`).
+> - Legen Sie **install_localization.cmd** in diesem `data`-Ordner ab und doppelklicken Sie, um es auszuführen.
 
 ### Manuelle Installation
-1. Laden Sie die Datei [Localization.zip](https://github.com/Dymerz/StarCitizen-Localization/releases/latest/download/Localization.zip) herunter.
-2. Entpacken Sie die heruntergeladene Datei nach `\StarCitizen\LIVE\data\`. (z.B. `C:\Program Files\Roberts Space Industries\StarCitizen\LIVE\data\`)
-3. Erstellen oder bearbeiten Sie die folgende Datei: `\StarCitizen\LIVE\user.cfg`. (z.B. `C:\Program Files\Roberts Space Industries\StarCitizen\LIVE\user.cfg`)
-4. Fügen Sie, je nachdem welche Sprache Sie verwenden möchten, eine der folgenden Zeilen zur Datei hinzu:
 
-    | Sprache |   |
-    |---|---|
-    | Englisch | `g_language = english` |
-    | Französisch - Frankreich | `g_language = french_(france)` |
-    | Deutsch - Deutschland | `g_language = german_(germany)` |
-    | Italienisch - Italien | `g_language = italian_(italy)` |
-    | Portugiesisch - Brasilien | `g_language = portuguese_(brazil)` |
-    | Spanisch - Lateinamerika | `g_language = spanish_(latin_america)` |
-    | Spanisch - Spanien | `g_language = spanish_(spain) ` |
+1. Laden Sie [Localization.zip](https://github.com/Dymerz/StarCitizen-Localization/releases/latest/download/Localization.zip) herunter.
+2. Extrahieren Sie die Dateien nach `\StarCitizen\LIVE\data\` (z. B., `C:\Program Files\Roberts Space Industries\StarCitizen\LIVE\data\`).
+3. Erstellen/bearbeiten Sie `\StarCitizen\LIVE\user.cfg`.
+4. Fügen Sie die folgenden Zeilen hinzu, um Sprache und Audiosprache einzustellen:
+   ```plaintext
+   g_language = german_(germany)
+   g_languageAudio = english
+   ```
+5. Speichern Sie die Datei `user.cfg` und starten Sie das Spiel. 🚀
 
-5. Speichern Sie die Datei und starten Sie das Spiel. 🚀
+#### Beispiel `user.cfg` Datei:
+```plaintext
+g_language = german_(germany)
+g_languageAudio = english
+```
 
 ---
 ## Aktualisieren der Lokalisierungsdateien
@@ -91,6 +102,7 @@ Um die Lokalisierungsdateien zu aktualisieren, folgen Sie bitte erneut der [Inst
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Brill65"><img src="https://avatars.githubusercontent.com/u/8363399?v=4?s=100" width="100px;" alt="Manu"/><br /><sub><b>Manu</b></sub></a><br /><a href="#review-Brill65" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/danidomen"><img src="https://avatars.githubusercontent.com/u/5998908?v=4?s=100" width="100px;" alt="Daniel Martin (dmartin-webimpacto)"/><br /><sub><b>Daniel Martin (dmartin-webimpacto)</b></sub></a><br /><a href="#translation-danidomen" title="Translation">🌍</a></td>
+	  <td align="center" valign="top" width="14.28%"><a href="https://github.com/xGattoMattox"><img src="https://avatars.githubusercontent.com/u/149336969?v=4?s=100" width="100px;" alt="xGattoMattox"/><br /><sub><b>xGattoMattox</b></sub></a><br /><a href="#translation-xGattoMattox" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>

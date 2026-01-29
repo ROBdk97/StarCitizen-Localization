@@ -4,11 +4,11 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/Dymerz/StarCitizen-Localization/total)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Dymerz/StarCitizen-Localization/.github%2Fworkflows%2Fvalidate-global-ini.yaml?event=push&label=INI%20Validation&link=https%3A%2F%2Fgithub.com%2FDymerz%2FStarCitizen-Localization%2Factions%2Fworkflows%2Fvalidate-global-ini.yaml)
 
-- **Versões:**
-  - [LIVE](https://github.com/Dymerz/StarCitizen-Localization/blob/main/README_ptbr.md)
-  - [PTU](https://github.com/Dymerz/StarCitizen-Localization/blob/ptu/README_ptbr.md)
+**Versões:**
+- [LIVE](https://github.com/Dymerz/StarCitizen-Localization/blob/main/README_ptbr.md)
+- [PTU](https://github.com/Dymerz/StarCitizen-Localization/blob/ptu/README_ptbr.md)
 
-- **Idiomas:**
+**Idiomas:**
 - 🇬🇧 [Instructions in English.](README.md).
 - 🇫🇷 [Instruction en Français](README_fr.md).
 - 🇩🇪 [Anleitung auf Deutsch](README_de.md).
@@ -17,21 +17,21 @@
 - 🇧🇷 [Instrução em Português](README_ptbr.md).
 
 **Table of Contents:**
-  - [Supported Languages](#supported-languages)
-  - [Installation Guide](#installation-guide)
-  - [Updating the Localization Files](#contributing)
-  - [Contributing](#contributing)
-  - [Disclaimer](#Disclaimer)
+- [Supported Languages](#supported-languages)
+- [Installation Guide](#installation-guide)
+- [Updating the Localization Files](#contributing)
+- [Contributing](#contributing)
+- [Disclaimer](#Disclaimer)
 
 ---
 ## Idiomas Suportados
 
 | Idioma                  | Suportado | Fonte |
 |--------------------------|-----------|-------|
-| Inglês                  | ![Static Badge](https://img.shields.io/badge/4.1.0-PTU-brightgreen) | Importado dos arquivos do jogo |
-| Francês - França        | ![Static Badge](https://img.shields.io/badge/4.0.2-LIVE-brightgreen) | Gerado de [circuspes.fr](https://traduction.circuspes.fr) e [SPEED0U/StarCitizenFrenchTranslation](https://github.com/SPEED0U/StarCitizenFrenchTranslation) |
-| Alemão - Alemanha       | ![Static Badge](https://img.shields.io/badge/4.1.0-PTU-brightgreen) | Aqui |
-| Português - Brasil      | ![Static Badge](https://img.shields.io/badge/4.1.0-PTU-brightgreen) | Aqui |
+| Inglês                  | ![Static Badge](https://img.shields.io/badge/4.6.0-LIVE-brightgreen) | Importado dos arquivos do jogo |
+| Francês - França        | ![Static Badge](https://img.shields.io/badge/4.2.0-LIVE-yellow) | Gerado de [circuspes.fr](https://traduction.circuspes.fr) |
+| Alemão - Alemanha       | ![Static Badge](https://img.shields.io/badge/4.2.0-LIVE-yellow) | Aqui |
+| Português - Brasil      | ![Static Badge](https://img.shields.io/badge/4.6.0-LIVE-brightgreen) | Aqui |
 | Italiano - Itália       | ![Static Badge](https://img.shields.io/badge/3.24.1-LIVE-yellow) | [GattoMatto](https://robertsspaceindustries.com/citizens/GattoMatto) e [MrRevo](https://robertsspaceindustries.com/citizens/MrRevo) |
 | Espanhol - Espanha      | ![Static Badge](https://img.shields.io/badge/3.23.1a-LIVE-orange) | Aqui |
 | Espanhol - América Latina | ![Static Badge](https://img.shields.io/badge/x.xx.x-LIVE-darkred) | Aguardando contribuição |
@@ -44,8 +44,21 @@
 ---
 ## Guia de Instalação
 
+### Método de Instalação Mais Simples (PowerShell)
 
-### Instalação automática
+Basta copiar e colar este **único comando** no PowerShell para instalar automaticamente as traduções do Star Citizen:
+
+```powershell
+powershell -ExecutionPolicy Bypass -Command "iex (irm https://raw.githubusercontent.com/Dymerz/StarCitizen-Localization/main/tools/install_localization.ps1)"
+```
+
+> **Passos Simples:**
+> 1. Pressione `Win+X` e selecione "Windows PowerShell" ou "Terminal"
+> 2. Copie o comando acima
+> 3. Cole no PowerShell e pressione Enter
+> 4. Siga as instruções na tela para selecionar seu idioma
+
+### Instalação Automática (Alternativa)
 
 1. Baixe o script [install_localization.ps1](https://github.com/Dymerz/StarCitizen-Localization/releases/latest/download/install_localization.ps1).
 2. **Clique com o botão direito** no arquivo baixado (**install_localization.ps1**) e selecione `Executar com PowerShell`.
@@ -119,6 +132,10 @@ Para atualizar os arquivos de localização, siga novamente o [Guia de Instalaç
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+---
+## Estatísticas
+![Alt](https://repobeats.axiom.co/api/embed/771a52550a3333c3934d1fb5a03fffa14119471a.svg "Repobeats analytics image")
 
 ---
 ## Disclaimer

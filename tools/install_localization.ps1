@@ -128,20 +128,40 @@ Function Find-StarCitizenFolder() {
     if (Test-Path -Path $logPath -PathType Leaf) {
         $logContent = Get-Content -Path $logPath -Raw
 
-        # Regex pattern to match the line where the game is launched
-        $regexPattern = "Installing Star Citizen (.*?) at ([^`")]+)"
+    # Regex patterns to match launcher log lines where the game path is present
+    $regexPatterns = @(
+      'Launching Star Citizen\s+.*?\s+from\s+\(([^)]+)\)',
+      'Installing Star Citizen\s+.*?\s+at\s+([^"\r\n]+?)(?:\s+\(|"|$)'
+    )
 
-        # Try to find the path using the regular expression
-        $pathMatches = [regex]::Matches($logContent, $regexPattern)
+    foreach ($regexPattern in $regexPatterns) {
+      # Try to find the path using the regular expression
+      $pathMatches = [regex]::Matches($logContent, $regexPattern)
 
-        if ($pathMatches.Count -gt 0) {
-            $lastMatch = $pathMatches[$pathMatches.Count - 1]
-            $starCitizenPath = $lastMatch.Groups[2].Value
-            if (Test-Path -Path $starCitizenPath -PathType Container) {
-                Write-Debug "Found the game folder from the log file using regex: $starCitizenPath"
-                return $starCitizenPath
-            }
+      if ($pathMatches.Count -gt 0) {
+        $lastMatch = $pathMatches[$pathMatches.Count - 1]
+        $detectedPath = $lastMatch.Groups[1].Value
+        $detectedPath = $detectedPath.Trim()
+
+        # The launcher log is JSON-like and can contain escaped backslashes (e.g. C:\\Games\\StarCitizen)
+        if ($detectedPath.Contains('\\')) {
+          $detectedPath = $detectedPath.Replace('\\', '\')
         }
+
+        if (Test-Path -Path $detectedPath -PathType Container) {
+          # If the detected path points to an environment folder (LIVE/PTU/...), return the StarCitizen root folder
+          $starCitizenPath = $detectedPath
+          if (Test-Path -Path "$starCitizenPath\StarCitizen_Launcher.exe" -PathType Leaf) {
+            $starCitizenPath = Split-Path -Path $starCitizenPath -Parent
+          }
+
+          if (Test-Path -Path $starCitizenPath -PathType Container) {
+            Write-Debug "Found the game folder from the log file using regex: $starCitizenPath"
+            return $starCitizenPath
+          }
+        }
+      }
+    }
     }
 
     # Existing method: Try to find the game folder from the "RSI Launcher" logs with JSON parsing

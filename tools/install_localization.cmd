@@ -22,7 +22,7 @@ set BATCH_PATH=%BATCH_PATH:~0,-1%
 echo Checking directory...
 echo %BATCH_PATH% | findstr /I /C:"\StarCitizen\LIVE\data" >nul || echo %BATCH_PATH% | findstr /I /C:"\StarCitizen\PTU\data" >nul
 if errorlevel 1 (
-    echo This script must be executed from the "\StarCitizen\[LIVE or PTU\]\data" folder.
+    echo This script must be executed from the "\StarCitizen\[LIVE or PTU]\data" folder.
     pause
     exit /b
 )

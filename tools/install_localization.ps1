@@ -123,45 +123,91 @@ Function Find-RSILauncherFolder() {
     Try to guess the game folder from the "RSI Launcher" logs, the default installation path, or the "RSI Launcher" shortcut
 #>
 Function Find-StarCitizenFolder() {
-    # Try to find the game folder from the "RSI Launcher" logs using the new regex method (RSI Launcher 2.0)
+    function Resolve-StarCitizenRootFromLogPath([string]$pathFromLog) {
+      if ([string]::IsNullOrWhiteSpace($pathFromLog)) {
+        return $null
+      }
+
+      $candidatePath = $pathFromLog.Trim().Trim('"')
+
+      # The launcher log is JSON-like and can contain escaped backslashes (e.g. C:\\Games\\StarCitizen)
+      if ($candidatePath.Contains('\\')) {
+        $candidatePath = $candidatePath.Replace('\\', '\')
+      }
+
+      if (-not (Test-Path -Path $candidatePath -PathType Container)) {
+        return $null
+      }
+
+      $resolvedPath = $candidatePath
+
+      # If the path points to an environment folder (LIVE/PTU/...), resolve to StarCitizen root
+      if (Test-Path -Path "$resolvedPath\StarCitizen_Launcher.exe" -PathType Leaf) {
+        $resolvedPath = Split-Path -Path $resolvedPath -Parent
+      }
+
+      if (Test-Path -Path $resolvedPath -PathType Container) {
+        return $resolvedPath
+      }
+
+      return $null
+    }
+
+    # Try to find the game folder from the "RSI Launcher" logs using regex parsing
+    # Keep only the latest match per detected folder (scan from bottom to top), and only if folder still exists.
     $logPath = Join-Path $env:APPDATA "\rsilauncher\logs\log.log"
     if (Test-Path -Path $logPath -PathType Leaf) {
-        $logContent = Get-Content -Path $logPath -Raw
+      $logContent = Get-Content -Path $logPath -Raw
 
-    # Regex patterns to match launcher log lines where the game path is present
-    $regexPatterns = @(
-      'Launching Star Citizen\s+.*?\s+from\s+\(([^)]+)\)',
-      'Installing Star Citizen\s+.*?\s+at\s+([^"\r\n]+?)(?:\s+\(|"|$)'
-    )
+      # Regex patterns to match launcher log lines where the game path is present
+      $regexPatterns = @(
+        'Launching Star Citizen\s+.*?\s+from\s+\(([^)]+)\)',
+        '(?:Installing|Verifying) Star Citizen\s+.*?\s+at\s+([^"\r\n]+?)(?:\s+\(|"|$)'
+      )
 
-    foreach ($regexPattern in $regexPatterns) {
-      # Try to find the path using the regular expression
-      $pathMatches = [regex]::Matches($logContent, $regexPattern)
+      $allMatches = @()
+      foreach ($regexPattern in $regexPatterns) {
+        $allMatches += [regex]::Matches($logContent, $regexPattern)
+      }
 
-      if ($pathMatches.Count -gt 0) {
-        $lastMatch = $pathMatches[$pathMatches.Count - 1]
-        $detectedPath = $lastMatch.Groups[1].Value
-        $detectedPath = $detectedPath.Trim()
+      if ($allMatches.Count -gt 0) {
+        # Sort by position in file so "latest" means first from the bottom
+        $orderedMatches = $allMatches | Sort-Object Index
+        $seenDetectedFolders = @{}
+        $seenStarCitizenRoots = @{}
 
-        # The launcher log is JSON-like and can contain escaped backslashes (e.g. C:\\Games\\StarCitizen)
-        if ($detectedPath.Contains('\\')) {
-          $detectedPath = $detectedPath.Replace('\\', '\')
-        }
-
-        if (Test-Path -Path $detectedPath -PathType Container) {
-          # If the detected path points to an environment folder (LIVE/PTU/...), return the StarCitizen root folder
-          $starCitizenPath = $detectedPath
-          if (Test-Path -Path "$starCitizenPath\StarCitizen_Launcher.exe" -PathType Leaf) {
-            $starCitizenPath = Split-Path -Path $starCitizenPath -Parent
+        for ($i = $orderedMatches.Count - 1; $i -ge 0; $i--) {
+          $detectedPath = $orderedMatches[$i].Groups[1].Value
+          if ([string]::IsNullOrWhiteSpace($detectedPath)) {
+            continue
           }
 
-          if (Test-Path -Path $starCitizenPath -PathType Container) {
-            Write-Debug "Found the game folder from the log file using regex: $starCitizenPath"
-            return $starCitizenPath
+          $normalizedDetectedPath = $detectedPath.Trim().Trim('"')
+          if ($normalizedDetectedPath.Contains('\\')) {
+            $normalizedDetectedPath = $normalizedDetectedPath.Replace('\\', '\')
           }
+
+          $detectedPathKey = $normalizedDetectedPath.ToLowerInvariant()
+          if ($seenDetectedFolders.ContainsKey($detectedPathKey)) {
+            continue
+          }
+          $seenDetectedFolders[$detectedPathKey] = $true
+
+          $starCitizenRoot = Resolve-StarCitizenRootFromLogPath -pathFromLog $normalizedDetectedPath
+          if ($null -eq $starCitizenRoot) {
+            continue
+          }
+
+          $rootKey = $starCitizenRoot.ToLowerInvariant()
+          if ($seenStarCitizenRoots.ContainsKey($rootKey)) {
+            continue
+          }
+          $seenStarCitizenRoots[$rootKey] = $true
+
+          Write-Debug "Found the game folder from the log file using regex: $starCitizenRoot"
+          return $starCitizenRoot
         }
       }
-    }
     }
 
     # Existing method: Try to find the game folder from the "RSI Launcher" logs with JSON parsing
